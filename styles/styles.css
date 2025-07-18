@@ -1,0 +1,40 @@
+:root {
+  --background-color: rgb(55, 55, 55);
+  --accent-color: rgb(75, 75, 75);
+  --text-color: rgb(222, 222, 222);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-around;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  border: none;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  padding: 25px
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.pokebuttons * {
+  display: flex;
+  justify-content: space-around;
+  border-style: solid;
+  border-color: var(--accent-color);
+  border-radius: 5px;
+  padding: 5px;
+}
