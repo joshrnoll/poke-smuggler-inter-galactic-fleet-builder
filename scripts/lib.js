@@ -27,15 +27,16 @@ export function generatePokemonQuery(pokemonId){
   let query = fetch(url)
   .then((rawResponse) => rawResponse.json())
   .catch(() => alert(`No pokemon named ${pokemonId} was found.`))
-  .then((pokemonObj) => pokemonObj)
+  // .then((pokemonObj) => pokemonObj) // Not needed?
 
   return query
 }
 
-// Takes in a pokemonId as a starting index, a Div element to manipulate, and an incrementor.
+// Takes in a pokemonId as a starting index, a Div element to manipulate, an incrementor, and the inventory element.
 // Beginning at the starting index, it will build out elements inside of the buttonsElement which
 // include the pokemon name, image, and an 'add' button. Each time the function is called, it will add
-// additional elements according to the incrementor. Also the inventory to add to.
+// additional elements according to the incrementor. Event listeners are added to the add buttons which
+// update the current inventory when clicked.
 export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inventory) {
   for (let i = startingIndex; i < startingIndex + incrementor; i++){
     let query = generatePokemonQuery(i);
@@ -62,6 +63,7 @@ export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inv
       let pokemonObj = {};
       pokemonObj.name = pokemon.name;
       pokemonObj.weight = pokemon.weight;
+
       // If there's already a pokemon in inventory by that name, add one to count
       if (inventory.pokemon.some((obj) => obj.name === pokemon.name)){
         let index = inventory.pokemon.findIndex((obj) => obj.name === pokemon.name);
@@ -79,7 +81,16 @@ export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inv
       sessionStorage.setItem("inventory", JSON.stringify(inventory))
 
       // Update display
+      let currentTotalWeightDiv = document.getElementById("current-weight-display")
       let currentTotalWeight = document.getElementById("current-total-weight");
+      let nextButton = document.createElement("button")
+      nextButton.id = "next-button"
+      nextButton.type = "button"
+      nextButton.innerHTML = "Build your fleet >>"
+      nextButton.addEventListener("click", () => window.location.href="fleet-build.html")
+      if (currentTotalWeightDiv.children.length === 1){
+        currentTotalWeightDiv.appendChild(nextButton);
+      }
       currentTotalWeight.innerHTML = `Current Total Weight: <span id=total>${inventory.totalWeight}</span>`
     }))
 
