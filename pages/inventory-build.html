@@ -9,13 +9,23 @@
 </head>
 <body>
   <header>
-    <div class="inventory-builder-menu">
+    <div id="top-block">
       <h1>What will you be smuggling today?</h1>
-      <div id="current-weight-display">
-        <h2 id="current-total-weight"></h2>
+      <div id="inventory-data">
+        <table id="current-inventory">
+          <tr>
+            <td class="inventory-table-header">Pokemon</td>
+            <td class="inventory-table-header">Count</td>
+            <td class="inventory-table-header">Weight</td>
+          </tr>
+          <tr>
+          </tr>
+        </table>
       </div>
+        <h2 id="current-total-weight"></h2>
       <div class="inventory"></div>
-      <form id="pokemon-inventory"></form>
+      <!-- <form id="pokemon-inventory"></form> -->
+      <button type="button" id="next-button">Build your fleet>></button>
       <form id="pokesearch">
         <input id="pokesearch-input" type="text" placeholder="Search for a pokemon">
         <button id="pokesearch-button" type="button">Search</button>

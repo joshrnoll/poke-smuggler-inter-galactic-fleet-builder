@@ -64,16 +64,38 @@ export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inv
       pokemonObj.name = pokemon.name;
       pokemonObj.weight = pokemon.weight;
 
+      let topDiv = document.getElementById("top-block")
+      let pokeSearch = document.getElementById("pokesearch")
+      let inventoryTable = document.getElementById("current-inventory")
       // If there's already a pokemon in inventory by that name, add one to count
       if (inventory.pokemon.some((obj) => obj.name === pokemon.name)){
         let index = inventory.pokemon.findIndex((obj) => obj.name === pokemon.name);
-        inventory.pokemon[index].count += 1;
+        inventory.pokemon[index].count += 1
+        let tableRow = document.getElementById(`${pokemon.name}`)
+        let countField = tableRow.children[1]
+        let weightField = tableRow.children[2]
+        countField.innerHTML = inventory.pokemon[index].count
+        weightField.innerHTML = inventory.pokemon[index].count * pokemon.weight
       }
 
       // Add new pokemon to inventory
       else{
         pokemonObj.count = 1;
         inventory.pokemon.push(pokemonObj);
+
+        // Add to HTML table
+        let tableDataName = document.createElement("td")
+        let tableDataCount = document.createElement("td")
+        let tableDataWeight = document.createElement("td")
+        tableDataName.innerHTML = pokemon.name
+        tableDataCount.innerHTML = pokemonObj.count
+        tableDataWeight.innerHTML = pokemonObj.count * pokemon.weight
+        let tableRow = document.createElement("tr");
+        tableRow.id = `${pokemon.name}`
+        tableRow.appendChild(tableDataName)
+        tableRow.appendChild(tableDataCount)
+        tableRow.appendChild(tableDataWeight)
+        inventoryTable.appendChild(tableRow);
       }
 
       // Update inventory in session storage
@@ -81,16 +103,17 @@ export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inv
       sessionStorage.setItem("inventory", JSON.stringify(inventory))
 
       // Update display
-      let currentTotalWeightDiv = document.getElementById("current-weight-display")
       let currentTotalWeight = document.getElementById("current-total-weight");
-      let nextButton = document.createElement("button")
-      nextButton.id = "next-button"
-      nextButton.type = "button"
-      nextButton.innerHTML = "Build your fleet >>"
+      // let nextButton = document.createElement("button");
+      // nextButton.id = "next-button";
+      // nextButton.type = "button";
+      // nextButton.innerHTML = "Build your fleet >>"
+      // nextButton.addEventListener("click", () => window.location.href="fleet-build.html")
+      // if (inventory.pokemon.length === 1){
+      //   topDiv.insertBefore(nextButton, pokeSearch);
+      // }
+      let nextButton = document.getElementById("next-button")
       nextButton.addEventListener("click", () => window.location.href="fleet-build.html")
-      if (currentTotalWeightDiv.children.length === 1){
-        currentTotalWeightDiv.appendChild(nextButton);
-      }
       currentTotalWeight.innerHTML = `Current Total Weight: <span id=total>${inventory.totalWeight}</span>`
     }))
 

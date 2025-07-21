@@ -33,7 +33,7 @@ button:hover {
   cursor: pointer;
 }
 
-.inventory-builder-menu {
+#top-block {
   text-align: center;
 }
 
@@ -122,4 +122,20 @@ button:hover {
 
 #weight-remaining {
   color: red;
+}
+
+#current-inventory {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#current-inventory * {
+  border-style: solid;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.inventory-table-header {
+  border-style: none !important;
+  font-weight: bold;
 }
