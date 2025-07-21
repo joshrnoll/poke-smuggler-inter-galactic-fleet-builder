@@ -4,14 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles/styles.css">
-  <script defer src="../scripts/inventory-build-scripts.js"></script>
-  <title>Document</title>
+  <script defer type="module" src="../scripts/inventory-build-scripts.js"></script>
+  <title>Inventory Builder</title>
 </head>
 <body>
   <header>
-    <h1>Build Your Inventory</h1>
-    <div class="inventory"></div>
-    <div class="pokebuttons"></div>
+    <div class="inventory-builder-menu">
+      <h1>What will you be smuggling today?</h1>
+      <h2 id="current-total-weight"></h2>
+      <div class="inventory"></div>
+      <form id="pokemon-inventory"></form>
+      <form id="pokesearch">
+        <input id="pokesearch-input" type="text" placeholder="Search for a pokemon">
+        <button id="pokesearch-button" type="button">Search</button>
+      </form>
+      <button id="pokesearch-reset" type="button">Reset</button>
+    </div>
+    <div id="pokebuttons"></div>
+    <button id="pokebuttons-more">More</button>
   </header>
 </body>
 </html>

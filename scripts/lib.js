@@ -1,0 +1,91 @@
+export class Inventory {
+  constructor(){
+    if (sessionStorage.getItem("inventory")){
+      this.pokemon = JSON.parse(sessionStorage.getItem("inventory")).pokemon
+      this.totalWeight = JSON.parse(sessionStorage.getItem("inventory")).totalWeight
+    }
+
+    else{
+      this.pokemon = [];
+      this.totalWeight = 0;
+      sessionStorage.setItem("inventory", JSON.stringify(this))
+    }
+  }
+
+  calculateTotalWeight(){
+    this.totalWeight = 0;
+    for (let i = 0; i < this.pokemon.length; i++){
+      let weightToAdd = this.pokemon[i].weight * this.pokemon[i].count;
+      this.totalWeight += weightToAdd;
+    }
+  }
+}
+
+export function generatePokemonQuery(pokemonId){
+  let url = "https://pokeapi.co/api/v2/pokemon/" + pokemonId;
+
+  let query = fetch(url)
+  .then((rawResponse) => rawResponse.json())
+  .catch(() => alert(`No pokemon named ${pokemonId} was found.`))
+  .then((pokemonObj) => pokemonObj)
+
+  return query
+}
+
+// Takes in a pokemonId as a starting index, a Div element to manipulate, and an incrementor.
+// Beginning at the starting index, it will build out elements inside of the buttonsElement which
+// include the pokemon name, image, and an 'add' button. Each time the function is called, it will add
+// additional elements according to the incrementor. Also the inventory to add to.
+export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inventory) {
+  for (let i = startingIndex; i < startingIndex + incrementor; i++){
+    let query = generatePokemonQuery(i);
+
+    let divElement = document.createElement("div");
+    divElement.classList.add("pokebutton");
+    let imgElement = new Image(250,250);
+    let pElement = document.createElement("p");
+    let buttonElement = document.createElement("button");
+    buttonElement.classList.add("pokemon-add-button");
+
+    query.then((pokemon) => imgElement.src=pokemon.sprites.front_default);
+
+    query.then((pokemon) => {
+      let pokemonName = [...pokemon.name]; // Convert string to array to allow for splicing
+      let firstLetter = pokemon.name[0].toUpperCase();
+      pokemonName.splice(0,1,firstLetter)
+      pokemonName = pokemonName.join(''); // Rejoin array back to string
+      pElement.innerHTML=pokemonName;
+    });
+    buttonElement.innerHTML = "Add";
+
+    query.then((pokemon) => buttonElement.addEventListener("click", () => {
+      let pokemonObj = {};
+      pokemonObj.name = pokemon.name;
+      pokemonObj.weight = pokemon.weight;
+      // If there's already a pokemon in inventory by that name, add one to count
+      if (inventory.pokemon.some((obj) => obj.name === pokemon.name)){
+        let index = inventory.pokemon.findIndex((obj) => obj.name === pokemon.name);
+        inventory.pokemon[index].count += 1;
+      }
+
+      // Add new pokemon to inventory
+      else{
+        pokemonObj.count = 1;
+        inventory.pokemon.push(pokemonObj);
+      }
+
+      // Update inventory in session storage
+      inventory.totalWeight += pokemon.weight;
+      sessionStorage.setItem("inventory", JSON.stringify(inventory))
+
+      // Update display
+      let currentTotalWeight = document.getElementById("current-total-weight");
+      currentTotalWeight.innerHTML = `Current Total Weight: <span id=total>${inventory.totalWeight}</span>`
+    }))
+
+    divElement.appendChild(pElement);
+    divElement.appendChild(imgElement);
+    divElement.appendChild(buttonElement);
+    buttonsElement.appendChild(divElement);
+  }
+}
