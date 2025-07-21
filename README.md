@@ -18,3 +18,8 @@ Now, you're backed by the best fleet-planning tool in the galaxy: the **PokeSmug
 ### User Stories
 As a PokeSmuggler, I want to know what vehicles I need for a given set of pokemon that I need to smuggle.
 
+### How to deploy
+
+```bash
+azcopy sync "./src" "https://<storage-account>.blob.core.windows.net/%24web?<sas-token>" --recursive --delete-destination=true
+```
