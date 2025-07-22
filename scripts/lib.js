@@ -27,7 +27,6 @@ export function generatePokemonQuery(pokemonId){
   let query = fetch(url)
   .then((rawResponse) => rawResponse.json())
   .catch(() => alert(`No pokemon named ${pokemonId} was found.`))
-  // .then((pokemonObj) => pokemonObj) // Not needed?
 
   return query
 }

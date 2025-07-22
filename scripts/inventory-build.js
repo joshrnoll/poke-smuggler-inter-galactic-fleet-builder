@@ -26,24 +26,33 @@ resetButton.addEventListener("click", () => {
 // Search functionality
 let pokeSearch = document.getElementById("pokesearch-input");
 let pokeSearchSubmit = document.getElementById("pokesearch-button")
-let searchTimeout;
 
 // TODO - allow for hitting 'enter' to submit search
-pokeSearch.addEventListener("input", (event) => {
-  let query = event.target.value.toLowerCase().trim(); // user input
-  clearTimeout(searchTimeout);
+// pokeSearch.addEventListener("blur", () => {
+//   let query = pokeSearch.value.toLowerCase().trim(); // user input
+//   generatePokemonQuery(query)
+//   .then((pokemon) => {
+//     document.getElementById("pokebuttons").innerHTML = "";
+//     buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+//   })
+// })
 
-  // TODO - fix bug that causes failed query alerts to stack up
-  // Convert to named function to allow for event listener removal
-  searchTimeout = setTimeout(() => {
-    pokeSearchSubmit.addEventListener("click", () =>
-      generatePokemonQuery(query)
-      .then((pokemon) => {
-        document.getElementById("pokebuttons").innerHTML = "";
-        buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
-      })
-    )
-  }, 500)
-});
+pokeSearch.addEventListener("keyup", (event) => {
+  let query = pokeSearch.value.toLowerCase().trim(); // user input
+  if (event.key === "Enter"){
+    generatePokemonQuery(query)
+    .then((pokemon) => {
+      document.getElementById("pokebuttons").innerHTML = "";
+      buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+    })
+  }
+})
 
-
+pokeSearchSubmit.addEventListener("click", () => {
+  let query = pokeSearch.value.toLowerCase().trim(); // user input
+  generatePokemonQuery(query)
+  .then((pokemon) => {
+    document.getElementById("pokebuttons").innerHTML = "";
+    buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+  })
+})
