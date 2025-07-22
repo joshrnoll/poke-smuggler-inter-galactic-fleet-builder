@@ -27,7 +27,6 @@ Now, you're backed by the best fleet-planning tool in the galaxy: the **PokeSmug
 
 - As a PokeSmuggler, I want to be presented with my unused cargo capacity once I select my fleet vehicles.
 
-
 ### How to deploy
 
 The site is hosted on an Azure Blob Storage account with static site hosting enabled. To deploy changes to the storage account, first generate an SAS token for the ```$web``` container. Then use following command:
@@ -35,3 +34,14 @@ The site is hosted on an Azure Blob Storage account with static site hosting ena
 ```bash
 azcopy sync "./src" "https://<storage-account>.blob.core.windows.net/%24web?<sas-token>" --recursive --delete-destination=true
 ```
+
+### Known Issues
+
+- Alerts for searches of invalid Pokemon stack up and are all re-fired each time an invalid search is performed
+- Fleet table does not persist on page refresh
+
+### Features to implement
+
+- Dropdown to select quantity of pokemon to add to inventory
+- Images of fleet vehicles
+- Download/export of inventory and fleet information
