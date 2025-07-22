@@ -98,7 +98,7 @@ fetch("https://swapi.info/api/starships")
         weightRemainingHeader.innerHTML = "Perfect Pack!"
       }
       else if (remainingWeight < 0){
-        weightRemainingHeader.innerHTML = `Fleet Complete! You have <span id=weight-remaining>${remainingWeight - (remainingWeight * 2)} lbs</span> of unused capacity.`
+        weightRemainingHeader.innerHTML = `Fleet Complete! <br> You have <span id=weight-remaining>${remainingWeight - (remainingWeight * 2)} lbs</span> of unused capacity.`
       }
       else{
         weightRemainingHeader.innerHTML = `Weight Remaining: <span id=weight-remaining>${remainingWeight}<span>`
