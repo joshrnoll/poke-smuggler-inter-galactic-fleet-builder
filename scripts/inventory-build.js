@@ -1,4 +1,3 @@
-import { generatePokemonQuery } from './lib.js'
 import { Inventory } from './lib.js'
 
 let pokemonInventory = new Inventory();
@@ -101,6 +100,17 @@ function buildPokeButtons(startingIndex, buttonsElement, incrementor, inventory)
   }
 }
 
+function generatePokemonQuery(pokemonId){
+  let url = "https://pokeapi.co/api/v2/pokemon/" + pokemonId;
+
+  let query = fetch(url)
+  .then((rawResponse) => rawResponse.json())
+  .catch(() => {
+    alert(`No pokemon named ${pokemonId} was found.`);
+  })
+  return query
+}
+
 buildPokeButtons(pokeIndex, pokeButtons, 8, pokemonInventory);
 
 moreButton.addEventListener("click", () => {
@@ -118,23 +128,18 @@ resetButton.addEventListener("click", () => {
 let pokeSearch = document.getElementById("pokesearch-input");
 let pokeSearchSubmit = document.getElementById("pokesearch-button")
 
-// TODO - allow for hitting 'enter' to submit search
-// pokeSearch.addEventListener("blur", () => {
-//   let query = pokeSearch.value.toLowerCase().trim(); // user input
-//   generatePokemonQuery(query)
-//   .then((pokemon) => {
-//     document.getElementById("pokebuttons").innerHTML = "";
-//     buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
-//   })
-// })
-
 pokeSearch.addEventListener("keyup", (event) => {
   let query = pokeSearch.value.toLowerCase().trim(); // user input
   if (event.key === "Enter"){
     generatePokemonQuery(query)
     .then((pokemon) => {
-      document.getElementById("pokebuttons").innerHTML = "";
-      buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+      if (pokemon === undefined){
+        buildPokeButtons(pokeIndex, pokeButtons, 8, pokemonInventory);
+      }
+      else{
+        document.getElementById("pokebuttons").innerHTML = "";
+        buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+      }
     })
   }
 })
@@ -143,7 +148,12 @@ pokeSearchSubmit.addEventListener("click", () => {
   let query = pokeSearch.value.toLowerCase().trim(); // user input
   generatePokemonQuery(query)
   .then((pokemon) => {
-    document.getElementById("pokebuttons").innerHTML = "";
-    buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+    if (pokemon === undefined){
+      buildPokeButtons
+    }
+    else{
+      document.getElementById("pokebuttons").innerHTML = "";
+      buildPokeButtons(pokemon.id, pokeButtons, 8, pokemonInventory);
+    }
   })
 })

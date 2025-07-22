@@ -20,13 +20,3 @@ export class Inventory {
     }
   }
 }
-
-export function generatePokemonQuery(pokemonId){
-  let url = "https://pokeapi.co/api/v2/pokemon/" + pokemonId;
-
-  let query = fetch(url)
-  .then((rawResponse) => rawResponse.json())
-  .catch(() => alert(`No pokemon named ${pokemonId} was found.`))
-
-  return query
-}
