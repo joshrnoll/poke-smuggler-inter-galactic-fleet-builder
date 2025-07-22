@@ -1,9 +1,7 @@
 let availableVehicles = [];
+let fleet = [];
 if (sessionStorage.getItem("fleet")){
-  let fleet = JSON.parse(sessionStorage.getItem("fleet"))
-}
-else{
-  let fleet = [];
+  fleet = JSON.parse(sessionStorage.getItem("fleet"))
 }
 let inventory = JSON.parse(sessionStorage.getItem("inventory"));
 let remainingWeight = inventory.totalWeight;
@@ -12,11 +10,12 @@ let inventorySelection = document.getElementById("fleet-builder-selection");
 function addToTable(newVehicle, table){
   let newVehicleObj = {}
   newVehicleObj.name = newVehicle.name
-  newVehicleObj.cargo_capacity = newVehicle.cargo_capacity
+  newVehicleObj.count = 1;
+  newVehicleObj.cargo_capacity = Number(newVehicle.cargo_capacity)
 
   // Add one to count of existing vehicle
-  if (fleet.includes(newVehicleObj)){
-    let index = fleet.indexOf(newVehicleObj);
+  if (fleet.some((obj) => obj.name === newVehicleObj.name)){
+    let index = fleet.findIndex((obj) => obj.name === newVehicleObj.name);
     fleet[index].count += 1
     let tableRow = document.getElementById(`${newVehicle.name}`)
     let countField = tableRow.children[1]
@@ -28,16 +27,15 @@ function addToTable(newVehicle, table){
 
   // Add new vehicle to table
   else{
-    newVehicleObj.count = 1;
-    fleet.push(newVehicle);
-
+    fleet.push(newVehicleObj);
+    console.log(newVehicleObj.cargo_capacity)
     // Add to HTML table
     let tableDataName = document.createElement("td")
     let tableDataCount = document.createElement("td")
     let tableDataCargoCap = document.createElement("td")
     tableDataName.innerHTML = newVehicleObj.name
     tableDataCount.innerHTML = newVehicleObj.count
-    tableDataCargoCap.innerHTML = newVehicleObj.count * newVehicleObj.weight
+    tableDataCargoCap.innerHTML = newVehicleObj.count * newVehicleObj.cargo_capacity
     let tableRow = document.createElement("tr");
     tableRow.id = `${newVehicleObj.name}`
     tableRow.appendChild(tableDataName)
@@ -46,6 +44,7 @@ function addToTable(newVehicle, table){
     table.appendChild(tableRow);
     sessionStorage.setItem("fleet", JSON.stringify(fleet))
   }
+  console.log(fleet)
 }
 
 // Get all starships
