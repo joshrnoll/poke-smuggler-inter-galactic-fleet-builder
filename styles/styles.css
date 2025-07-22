@@ -124,12 +124,12 @@ button:hover {
   color: red;
 }
 
-#current-inventory {
+.current-inventory {
   margin-left: auto;
   margin-right: auto;
 }
 
-#current-inventory * {
+.current-inventory * {
   border-style: solid;
   padding: 5px;
   border-radius: 10px;

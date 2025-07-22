@@ -66,7 +66,7 @@ export function buildPokeButtons(startingIndex, buttonsElement, incrementor, inv
 
       let topDiv = document.getElementById("top-block")
       let pokeSearch = document.getElementById("pokesearch")
-      let inventoryTable = document.getElementById("current-inventory")
+      let inventoryTable = document.querySelector(".current-inventory")
       // If there's already a pokemon in inventory by that name, add one to count
       if (inventory.pokemon.some((obj) => obj.name === pokemon.name)){
         let index = inventory.pokemon.findIndex((obj) => obj.name === pokemon.name);
