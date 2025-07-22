@@ -28,7 +28,6 @@ function addToTable(newVehicle, table){
   // Add new vehicle to table
   else{
     fleet.push(newVehicleObj);
-    console.log(newVehicleObj.cargo_capacity)
     // Add to HTML table
     let tableDataName = document.createElement("td")
     let tableDataCount = document.createElement("td")
@@ -44,7 +43,6 @@ function addToTable(newVehicle, table){
     table.appendChild(tableRow);
     sessionStorage.setItem("fleet", JSON.stringify(fleet))
   }
-  console.log(fleet)
 }
 
 // Get all starships
@@ -52,7 +50,7 @@ fetch("https://swapi.info/api/starships")
 .then((response) => response.json())
 .then((starships) => {
   for (let starship of starships){
-    if (starship.cargo_capacity >= inventory.totalWeight){
+    if (Number(starship.cargo_capacity)){
       availableVehicles.push(starship);
     }
   }
@@ -64,7 +62,7 @@ fetch("https://swapi.info/api/starships")
   .then((response) => response.json())
   .then((vehicles) => {
     for (let vehicle of vehicles){
-      if (vehicle.cargo_capacity >= inventory.totalWeight){
+      if (Number(vehicle.cargo_capacity)){
         availableVehicles.push(vehicle);
       }
     }
