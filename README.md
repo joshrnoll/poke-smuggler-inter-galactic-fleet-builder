@@ -1,6 +1,8 @@
 # PokeSmuggler Inter-Galactic Fleet Builder
 
-![](images/pokesmuggler.jpg)
+https://pokesmuggler.joshrnoll.com
+
+<img src="images/pokesmuggler.jpg" height=250 align=left HSPACE=15 VSPACE=15>
 
 The Pokemon and Star Wars universes have collided in a cruel, sick twist on the Big Bang theory. Chaos ensues. The war among the Galactic Empire and the Rebel alliance fades to black as Pokemon run rampant throughout a universe already filled with non-human creatures.
 
@@ -16,9 +18,19 @@ You saw your chance. As a small-timer out of Mos Celadon, with nothing but debts
 Now, you're backed by the best fleet-planning tool in the galaxy: the **PokeSmuggler Inter-Galactic Fleet Builder.**
 
 ### User Stories
-As a PokeSmuggler, I want to know what vehicles I need for a given set of pokemon that I need to smuggle.
+
+- As a PokeSmuggler, I want to build my inventory by clicking on images of Pokemon.
+
+- As a PokeSmuggler, I want to be presented with my total cargo weight as I build my inventory.
+
+- As a PokeSmuggler, I want to be presented with a selection of vehicles capable of carrying my cargo weight.
+
+- As a PokeSmuggler, I want to be presented with my unused cargo capacity once I select my fleet vehicles.
+
 
 ### How to deploy
+
+The site is hosted on an Azure Blob Storage account with static site hosting enabled. To deploy changes to the storage account, first generate an SAS token for the ```$web``` container. Then use following command:
 
 ```bash
 azcopy sync "./src" "https://<storage-account>.blob.core.windows.net/%24web?<sas-token>" --recursive --delete-destination=true
