@@ -37,7 +37,6 @@ azcopy sync "./src" "https://<storage-account>.blob.core.windows.net/%24web?<sas
 
 ### Known Issues
 
-- Alerts for searches of invalid Pokemon stack up and are all re-fired each time an invalid search is performed
 - Fleet table does not persist on page refresh
 
 ### Features to implement
